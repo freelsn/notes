@@ -9,8 +9,25 @@ tags: [sublime-text-3, python]
 ## Windows OS
 
 1. In *system variables*
-    ![](/images/sublime-text-3-system-variables.PNG "system environment variables")
+    ![](../images/sublime-text-3-system-variables.PNG "system environment variables")
 2. Add `%SUBLIME%` to `PATH` in *user variables*.
+
+## Mac OS
+
+Set sublime text as the Git editor
+```
+git config --global core.editor
+    "'/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl' --wait --new-window"
+```
+
+Open sublime text in command line
+`ln -s "/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/subl`
+
+# Fonts
+
+[Ubuntu Mono](https://design.ubuntu.com/font/)
+
+[Luxi Mono](https://www.fontsquirrel.com/fonts/luxi-mono)
 
 # Packages
 
@@ -115,6 +132,8 @@ tags: [sublime-text-3, python]
 
 # Sublime Text 3 User Settings
 
+## Windows OS
+
 ```
 {
     "caret_style": "solid",
@@ -181,6 +200,72 @@ tags: [sublime-text-3, python]
     "theme": "SoDaReloaded Dark.sublime-theme",
     "translate_tabs_to_spaces": true,
     "trim_trailing_white_space_on_save": true,
+    "wide_caret": true
+}
+```
+
+## Mac OS
+
+```
+{
+    "caret_style": "solid",
+    "color_scheme": "Packages/User/SublimeLinter/Tomorrow-Night (SL).tmTheme",
+    "draw_white_space": "all",
+    "file_exclude_patterns":
+    [
+        "*.pyc",
+        "*.pyo",
+        "*.exe",
+        "*.dll",
+        "*.obj",
+        "*.o",
+        "*.a",
+        "*.lib",
+        "*.so",
+        "*.dylib",
+        "*.ncb",
+        "*.sdf",
+        "*.suo",
+        "*.pdb",
+        "*.idb",
+        "*.DS_Store",
+        "*.class",
+        "*.psd",
+        "*.db",
+        "*.sublime-workspace"
+    ],
+    "fold_buttons": false,
+    "folder_exclude_patterns":
+    [
+        ".svn",
+        ".git",
+        ".hg",
+        "CVS",
+        "__pycache__"
+    ],
+    "font_face": "Luxi Mono",
+    "font_options":
+    [
+        "subpixel_antialias",
+        "no_bold",
+        "no_italic"
+    ],
+    "font_size": 14,
+    "highlight_line": true,
+    "highlight_modified_tabs": true,
+    "ignored_packages":
+    [
+        "Vintage"
+    ],
+    "indent_guide_options":
+    [
+        "draw_active"
+    ],
+    "line_padding_bottom": 0,
+    "line_padding_top": 0,
+    "scroll_past_end": true,
+    "shift_tab_unindent": true,
+    "theme": "SoDaReloaded Dark.sublime-theme",
     "wide_caret": true
 }
 ```
