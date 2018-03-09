@@ -9,7 +9,7 @@ tags: [sublime-text-3, python]
 ## Windows OS
 
 1. In *system variables*
-    ![](../images/sublime-text-3-system-variables.PNG "system environment variables")
+    ![](https://raw.githubusercontent.com/freelsn/figures-for-markdown-writing/master/sublime-text-3-system-variables.PNG "system environment variables")
 2. Add `%SUBLIME%` to `PATH` in *user variables*.
 
 ## Mac OS
@@ -59,6 +59,8 @@ Open sublime text in command line
 ```
 
 ## SublimeLinter
+
+> Some options will change depends on the version you are using, so try to see the 「default」 setting first.
 
 ```
 {
