@@ -123,6 +123,7 @@ SC_MODULE(tb_design) {
     // Data variable
 
     // Member function
+    void time_stamp();
     void compare();
 
     // Method process
@@ -153,32 +154,36 @@ SC_MODULE(tb_design) {
 void
 tb_design::send() {
     // Check input file
-    infile = fopen(INFILE, "rt");
-    if (!infile) {
+    infile = fopen(INFILE, "r");
+    if (infile == NULL) {
         cout << "Could not open " << INFILE << endl;
         sc_stop();
         exit(-1);
     }
-    // Reset
-    rst.write(1);
-    wait();
-    rst.write(0);
-    wait();
+
+    unsigned int idata_t;
+
+    if (rst)
+        wait();
 
     while (true) {
         // Start testing
-        while (fscanf(infile, "%u", &infile) != EOF) {
+        time_stamp();
+        cout << "Testing starts" << endl;
+        while (fscanf(infile, "%u", &idata_t) != EOF) {
             // Send data to input ports
-            idata.write(infile);
+            idata.write(idata_t);
             wait();
         }
+        time_stamp();
+        cout << "Testing ends" << endl;
 
         // The testing ends
         fclose(infile);
         fclose(outfile);
-        cout << endl;
-        cout << "Start comparing results " << endl;
 
+        time_stamp();
+        cout << "Start comparing results " << endl;
         compare();
         sc_stop();
 
@@ -197,13 +202,15 @@ tb_design::recv() {
         exit(-1);
     }
 
-    unsigned int odata_buf = 0;
+    int odata_t;
 
-    wait();
+    if (rst)
+        wait();
 
     // Receiving the data
     while (true) {
-        fprintf(outfile, "%d\n", odata.read());
+        odata_t = odata.read().to_int();
+        fprintf(outfile, "%d\n", odata_t);
         wait();
     }
     // No statement is allowed after the loop
@@ -226,7 +233,7 @@ tb_design::compare() {
         exit(-1);
     }
     // Open diff file
-    diff = fopen(DIFF, "rt");
+    diff = fopen(DIFF, "wt");
     if (!diff) {
         cout << "[Compare] Could not open " << DIFF << endl;
         sc_stop();
@@ -234,14 +241,12 @@ tb_design::compare() {
     }
 
     // Start comparing
-    int line_num = 1;
+    int line = 1;
     int errors = 0;
     int data_out, data_out_golden;
 
     while (fscanf(outfile_golden, "%d", &data_out_golden) != EOF) {
         fscanf(outfile, "%d", &data_out);
-        cout << "Cycle [" << line << "]: ";
-        cout << data_out_golden << " -- " << data_out << endl;
 
         if (data_out != data_out_golden) {
             cout << "Output mismatch [line: " << line << "] ";
@@ -255,6 +260,7 @@ tb_design::compare() {
         line ++;
     }
 
+    time_stamp();
     if (errors == 0)
         cout << "Simulation SUCCESSED" << endl;
     else
@@ -264,12 +270,16 @@ tb_design::compare() {
     fclose(outfile_golden);
     fclose(diff);
 }
+
+void
+tb_design::time_stamp() {
+    cout << "@" << sc_time_stamp() << " ";
+}
 ```
 
 ## `main.cpp`
 
 ```cpp
-#include "systemc.h"
 #include "design.h"
 #include "tb_design.h"
 
@@ -319,6 +329,11 @@ int sc_main(int argc, char *argv[]) {
     sc_trace(trace_file, top->odata_sig, "odata");
 #endif
 
+    top->rst_sig.write(1);
+    sc_start(100, SC_NS);
+    top->rst_sig.write(0);
+
+    cout << "Simulation starts" << endl;
     sc_start();
 
 #ifdef WAVE_DUMP
