@@ -111,16 +111,16 @@ design::foo() {
 SC_MODULE(tb_design) {
     // Module port
     sc_in_clk clk;
-    sc_in<bool> rst;
+    sc_out<bool> rst;
 
     sc_in<sc_uint<8> > odata;
 
     sc_out<sc_uint<8> > idata;
 
     // Signal variable
-    FILE *infile, *outfile, *outfile_golden, *diff;
 
     // Data variable
+    FILE *infile, *outfile, *outfile_golden, *diff;
 
     // Member function
     void time_stamp();
@@ -140,7 +140,6 @@ SC_MODULE(tb_design) {
     }
 
     ~tb_design() {}
-
 };
 
 #endif
