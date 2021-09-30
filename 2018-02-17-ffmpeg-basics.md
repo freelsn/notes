@@ -53,8 +53,6 @@ $ ffmpeg -i InputFile.xxx -acodec aac -vcodec mpeg4 -s 1280x720 OutputFile.xxx
 ```
 
 
-
-
 <a name="bitrate">1</a>: [Recommended](https://support.google.com/youtube/answer/1722171?hl=en)
 
 <a name="sample">2</a>: [19 ffmpeg commands](http://www.catswhocode.com/blog/19-ffmpeg-commands-for-all-needs)
